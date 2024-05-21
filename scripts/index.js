@@ -3,8 +3,8 @@
 /*
 bootstrap card example:
 
-<div class="card">
-  <img src="PET IMAGE PATH GOES HERE" class="card-img-top" alt="ALT TEXT HERE">
+<div class="card w-25">
+  <img src="PET IMAGE PATH GOES HERE" class="card-img-top card-img-fit" alt="ALT TEXT HERE">
   <div class="card-body">
     <h5 class="card-title">PET NAME HERE</h5>
     <p class="card-text">PET DETAILS HERE</p>
@@ -18,6 +18,67 @@ window.onload = () => {
 
   let petDropdown = document.querySelector("#petSelect");
 
+  petDropdown.addEventListener("change", displayPetCard)
+
+
+}
+
+function displayPetCard(event){
+
+  let petDiv = document.querySelector("#pets");
+
+  //clear out the div before added the new card
+  petDiv.innerHTML = "";
+
+  let pet = pets.find((pet)=>{
+    return pet.name === event.target.value
+  })
+
+    //create the card div
+    let cardDiv = document.createElement("div");
+    cardDiv.classList.add("card", "w-25");
+
+    //create the image for the card
+    let cardImage = document.createElement("img");
+    cardImage.classList.add("card-img-top", "card-img-fit");
+    cardImage.src = pet.image;
+    cardImage.alt = pet.name;
+
+    //add the image to the card
+    cardDiv.appendChild(cardImage);
+
+    //make the card body
+    let cardBody = document.createElement("div");
+    cardBody.classList.add("card-body");
+
+    //add card title
+    let cardTitle = document.createElement("h5");
+    cardTitle.classList.add("card-title");
+    cardTitle.innerText = pet.name
+
+    //add the card title to the body
+    cardBody.appendChild(cardTitle)
+
+    //build the card text <p> where the rest of thei info about the pet goes
+    let cardText = document.createElement("p");
+    cardText.classList.add("card-text");
+    cardText.innerHTML = `
+      ${pet.name} is a ${pet.type}. The breed is ${pet.breed} and their best trick is, ${pet.bestTrick}.
+    `
+
+    //add the card text to the card body
+    cardBody.appendChild(cardText)
+
+    //add the card body to the card div
+    cardDiv.appendChild(cardBody)
+
+
+    //add the card to the div on the page
+    petDiv.appendChild(cardDiv);
+
+
+
+  
 
 }
 
